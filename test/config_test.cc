@@ -1,10 +1,11 @@
 #include <fcntl.h>
+#include <filesystem>
 #include <gtest/gtest.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <utils/config.h>
 #include <unistd.h>
+#include <utils/config.h>
 using namespace ors::utils;
 // TEST(config_test, 1) {
 //   config c(",", "#");
@@ -24,8 +25,10 @@ public:
   CoreConfigTest() : tmpdir(path) {
     // std::cerr << "tmpdir == " << tmpdir << std::endl;
     string str = tmpdir + "/test.txt";
-    std::cerr << "path == " << str << std::endl;
+    // std::cerr << "path == " << str << std::endl;
     // 要保证对应的路径文件夹都已经创建
+    std::filesystem::path p = "/tmp/ors_configtest/";
+    std::filesystem::create_directory(p);
     int fd = open(str.c_str(), O_WRONLY | O_CREAT, 0644);
     if (fd < 0) {
       std::cerr << "Couldn't open temp file" << std::endl;
@@ -44,7 +47,14 @@ public:
       std::cerr << "Couldn't write to temp file" << std::endl;
     close(fd);
   }
-  ~CoreConfigTest() {}
+  ~CoreConfigTest() {
+    try {
+      std::filesystem::remove_all(tmpdir); 
+      std::cout << "remove test dir successed" << std::endl;
+    } catch (const std::filesystem::filesystem_error &e) {
+      std::cerr << "remove test dir failed" << e.what() << std::endl;
+    }
+  }
   std::string tmpdir;
 };
 
