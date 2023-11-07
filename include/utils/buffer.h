@@ -10,6 +10,12 @@ class buffer : public noncopyable {
 public:
   using deleter = void (*)(void *data);
   // typedef void (*deleter)(void *data);
+private:
+  void *buf;
+
+  size_t len;
+
+  deleter del_fn;
 
 public:
   buffer();
@@ -41,13 +47,6 @@ public:
   template <typename T> static void del_array_func(void *data) {
     delete[] static_cast<T *>(data);
   }
-
-private:
-  void *buf;
-
-  size_t len;
-
-  deleter del_fn;
 };
 } // namespace utils
 } // namespace ors
