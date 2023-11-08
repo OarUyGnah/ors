@@ -2,8 +2,8 @@
 set_group("test")
 set_default(true)
 
-add_requires("gflags", "glog","gtest")
-add_packages("gflags", "glog", "gtest")
+add_requires("gflags", "glog","gtest","spdlog")
+add_packages("gflags", "glog", "gtest","spdlog")
 add_links("gtest_main")
 add_syslinks("pthread")
 

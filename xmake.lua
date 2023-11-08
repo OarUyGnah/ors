@@ -2,7 +2,7 @@ set_project("ors")
 
 add_rules("mode.debug", "mode.release")
 
-set_languages("c99", "c++17")
+set_languages("c++17")
 -- add_includedirs("/usr/include", "/usr/local/include")
 includes("src", "test")
 
