@@ -1,0 +1,36 @@
+package ors.test;
+
+/**
+ * \file
+ * This file contains the format for a protocol buffers message that is used
+ * for testing purposes only.
+ */
+
+message TestMessage {
+    required uint64 a = 1;
+    required uint64 b = 2;
+    repeated uint64 c = 3;
+    optional bytes d = 4;
+}
+
+message MissingOld {
+    enum TestEnum {
+        UNKNOWN = 90; // must be top
+        THREE = 3;
+        TWO = 2;
+        ONE = 1;
+    }
+    optional TestEnum which = 1;
+}
+
+message MissingNew {
+    enum TestEnum {
+        ONE = 1;
+        TWO = 2;
+        THREE = 3;
+        FOUR = 4;
+    }
+    optional TestEnum which = 1;
+    optional uint64 primitive = 2;
+    optional TestMessage msg = 3;
+}

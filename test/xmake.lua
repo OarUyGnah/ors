@@ -2,8 +2,9 @@
 set_group("test")
 set_default(true)
 
-add_requires("gflags", "glog","gtest","spdlog")
-add_packages("gflags", "glog", "gtest","spdlog")
+add_requires("gflags", "glog","gtest","spdlog","protobuf")
+-- add_packages("protobuf", {public = true})
+add_packages("gflags", "glog", "gtest","spdlog","protobuf")
 add_links("gtest_main")
 add_syslinks("pthread")
 
@@ -18,6 +19,9 @@ function all_tests()
     for _, x in ipairs(os.files("**.cc")) do
         local item = {}
         local s = path.filename(x)
+        if (s == "proto_test.cc") then
+            add_files("./*.proto", {rules = "protobuf.cpp"})
+        end
         table.insert(item, s:sub(1, #s - 3)) -- target
         table.insert(item, path.relative(x, ".")) -- source
         table.insert(res, item)
@@ -43,8 +47,7 @@ end
 -- 构建所有test xmake run all-test
 target("all-test")
     set_kind("binary")
-    -- add_packages("gtest")
-    -- set_default(false)
-    -- add_links("gtest_main")
+    -- add_rules("protobuf.cpp")
+    add_files("*.proto", {proto_rootdir = "src"})
     add_files("*.cc","../src/utils/*.cc")
     add_includedirs("../include")

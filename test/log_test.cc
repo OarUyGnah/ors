@@ -6,7 +6,7 @@ void test_spdlog() {
   spdlog::info("set spdlog {}", "dependencies ok");
 }
 
-int main(int argc, char const *argv[]) {
-  test_spdlog();
-  return 0;
-}
+// int main(int argc, char const *argv[]) {
+//   test_spdlog();
+//   return 0;
+// }

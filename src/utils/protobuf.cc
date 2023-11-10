@@ -106,7 +106,7 @@ bool operator!=(const Message &a, const Message &b) { return !(a == b); }
 
 bool operator==(const Message &a, const std::string &bStr) {
   std::unique_ptr<Message> b(a.New());
-  LogSilencer _;
+  LogSilencer lser;
   TextFormat::ParseFromString(bStr, b.get());
   return (a == *b);
 }
