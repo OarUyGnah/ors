@@ -20,7 +20,7 @@ function all_tests()
         local item = {}
         local s = path.filename(x)
         if (s == "proto_test.cc") then
-            add_files("./*.proto", {rules = "protobuf.cpp"})
+            add_files("./*.proto", {rules = "protobuf.cc"})
         end
         table.insert(item, s:sub(1, #s - 3)) -- target
         table.insert(item, path.relative(x, ".")) -- source
@@ -48,6 +48,6 @@ end
 target("all-test")
     set_kind("binary")
     -- add_rules("protobuf.cpp")
-    add_files("*.proto", {proto_rootdir = "src"})
+    -- add_files("*.proto", {proto_rootdir = "./"})
     add_files("*.cc","../src/utils/*.cc")
     add_includedirs("../include")
