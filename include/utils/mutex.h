@@ -9,16 +9,16 @@ namespace utils {
 class mutex {
 public:
 // 
-  mutex() : m(), cb() {}
+  mutex() : mtx(), cb() {}
 
   void lock() {
-    m.lock();
+    mtx.lock();
     if (cb)
       cb();
   }
 
   bool try_lock() {
-    bool l = m.try_lock();
+    bool l = mtx.try_lock();
     if (l) {
       if (cb)
         cb();
@@ -31,14 +31,14 @@ public:
     // this will then call the callback without the lock, which is unsafe.
     if (cb)
       cb();
-    m.unlock();
+    mtx.unlock();
   }
     // HANDLE(windows) or pthread_mutex_t(Linux)
-  std::mutex::native_handle_type native_handle() { return m.native_handle(); }
+  std::mutex::native_handle_type native_handle() { return mtx.native_handle(); }
 
 private:
   /// Underlying mutex.
-  ::std::mutex m;
+  ::std::mutex mtx;
 
 public:
   /**

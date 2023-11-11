@@ -1,4 +1,4 @@
-add_requires("spdlog","protobuf")
+add_requires("spdlog","protobuf","pqxx","pq")
 
 target("main")
     set_kind("binary")
@@ -8,6 +8,6 @@ target("main")
     add_files("*.cc")
     add_syslinks("pthread")
     
-    add_packages("spdlog","protobuf")
+    add_packages("spdlog","protobuf","pqxx","pq")
     -- add_links("spdlog")
     -- set_config("buildir", "build.xmake")
