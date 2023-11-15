@@ -12,8 +12,12 @@ namespace ors {
 namespace utils {
 class condition_variable {
 public:
+  enum notify_type{ ONE, ALL };
+
+public:
   condition_variable();
   ~condition_variable();
+  void notify(notify_type);
   void notify_one();
   void notify_all();
   void wait(std::unique_lock<std::mutex> &ul);
@@ -50,34 +54,25 @@ public:
     ul.release();
     wait_until(stdLockGuard, abs_time);
     assert(stdLockGuard);
-    ul = std::unique_lock<mtx>(mtx, std::adopt_lock_t());
+    ul = std::unique_lock<mutex>(mtx, std::adopt_lock_t());
     stdLockGuard.release();
     if (mtx.cb)
       mtx.cb();
   }
 
 private:
-  /// Underlying condition variable.
+  void init();
+
+  // private:
+public:
   pthread_cond_t cv;
-  /**
-   * This function will be called with the lock released during every
-   * invocation of wait/wait_until. No wait will actually occur; this is only
-   * used for unit testing.
-   */
+
   std::function<void()> cb;
 
 public:
-  /**
-   * The number of times this condition variable has been notified.
-   */
   std::atomic<uint64_t> notify_count;
-  /**
-   * In the last call to wait_until, the timeout that the caller provided (in
-   * terms of SteadyClock).
-   * This is used in some unit tests to check that timeouts are set
-   * correctly.
-   */
-  time::steady_clock::time_point lastWaitUntil;
+
+  time::steady_clock::time_point last_wu;
 };
 } // namespace utils
 } // namespace ors
