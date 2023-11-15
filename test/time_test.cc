@@ -2,12 +2,12 @@
 #include <iostream>
 // #include <spdlog/spdlog.h>
 #include <stdexcept>
-#include <utils/string_util.h>
+#include <utils/common.h>
 #include <utils/time.h>
 namespace ors {
 namespace utils {
 using std::chrono::nanoseconds;
-using string_util::to_string;
+using string::to_string;
 
 TEST(time, make_timespec) {
   struct timespec s;

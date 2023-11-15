@@ -20,7 +20,7 @@ int64_t parse(const std::string &description) {
     // pass
   } else if (errno != 0 || start == end) {
     throw invalid_time_description(
-        ors::utils::string_util::fmt("Invalid time description: "
+        ors::utils::string::fmt("Invalid time description: "
                                      "could not parse number from \"%s\"",
                                      description.c_str()));
   }
@@ -101,7 +101,7 @@ int64_t parse(const std::string &description) {
       r = overflow;
   } else {
     throw invalid_time_description(
-        ors::utils::string_util::fmt("Invalid time description: "
+        ors::utils::string::fmt("Invalid time description: "
                                      "could not parse units from \"%s\"",
                                      description.c_str()));
   }
@@ -111,7 +111,7 @@ int64_t parse(const std::string &description) {
 uint64_t parse_non_negative_duration(const std::string &description) {
   int64_t r = parse(description);
   if (r < 0) {
-    throw invalid_time_description(ors::utils::string_util::fmt(
+    throw invalid_time_description(ors::utils::string::fmt(
         "Invalid time description: \"%s\" is negative", description.c_str()));
   }
   return static_cast<uint64_t>(r);
@@ -125,7 +125,7 @@ void sleep(ors::utils::time::steady_clock::time_point wake) {
   if (r != 0) {
     SPDLOG_ERROR("clock_nanosleep(STEADY_CLOCK_ID=%d, %s) failed: %s",
                  STEADY_CLOCK_ID,
-                 ors::utils::string_util::to_string(wake).c_str(), strerror(r));
+                 ors::utils::string::to_string(wake).c_str(), strerror(r));
   }
 }
 

@@ -2,7 +2,7 @@
 #include <map>
 #include <mutex>
 #include <unordered_set>
-#include <utils/string_util.h>
+#include <utils/common.h>
 #include <utils/tid.h>
 
 // static std::atomic<uint64_t> _nextid = 1;
@@ -34,7 +34,7 @@ uint64_t tid() {
 void set_name(std::string name) {
   auto curr_tid = tid();
   std::lock_guard<std::mutex> lg(_mtx);
-  auto trim_name = ors::utils::string_util::trim(name);
+  auto trim_name = ors::utils::string::trim(name);
   try {
     if (trim_name.size() == 0 || _tid_name_set.count(trim_name)) {
       throw thread_name_alredy_exist(trim_name);
@@ -45,7 +45,7 @@ void set_name(std::string name) {
   } catch (thread_name_alredy_exist &e) {
     // spdlog::warning()
     _tid_name_map[curr_tid] =
-        std::move(string_util::fmt("Thread %ld", curr_tid));
+        std::move(string::fmt("Thread %ld", curr_tid));
   }
 
   //   else tid_name_map[curr_tid] = trim_name;
@@ -57,7 +57,7 @@ std::string name() {
   if (_tid_name_map.count(curr_tid))
     return _tid_name_map[curr_tid];
   else
-    return std::move(ors::utils::string_util::fmt("Thread %lu", curr_tid));
+    return std::move(ors::utils::string::fmt("Thread %lu", curr_tid));
 }
 } // namespace tid
 } // namespace utils

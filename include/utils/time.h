@@ -6,7 +6,7 @@
 #include <exception>
 #include <iostream>
 #include <time.h>
-#include <utils/string_util.h>
+#include <utils/common.h>
 namespace ors {
 namespace utils {
 namespace time {
@@ -176,7 +176,7 @@ std::ostream &operator<<(std::ostream &os,
   if (std::chrono::time_point<clock, duration>::max() == tp)
     return os << "time_point::max()";
   struct timespec ts = ors::utils::time::make_timespec(tp);
-  return os << ors::utils::string_util::fmt("%ld.%09ld", ts.tv_sec, ts.tv_nsec);
+  return os << ors::utils::string::fmt("%ld.%09ld", ts.tv_sec, ts.tv_nsec);
 }
 
 } // namespace std

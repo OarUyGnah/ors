@@ -2,13 +2,13 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 #include <utils/protobuf.h>
-#include <utils/string_util.h>
+#include <utils/common.h>
 #include <utils/numeric.h>
 namespace ors {
 namespace utils {
 namespace protobuf {
 
-using ors::utils::string_util::replace_all;
+using ors::utils::string::replace_all;
 using ors::utils::numeric::down_cast;
 void fromString(const std::string &str, Message &protoBuf) {
   google::protobuf::LogSilencer lser; // 禁止protobuf库输出日志信息

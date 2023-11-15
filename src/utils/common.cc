@@ -5,12 +5,11 @@
 #include <cstring>
 #include <functional>
 #include <locale>
-#include <utils/string_util.h>
+#include <utils/common.h>
 
-// using namespace ors::utils::string_util;
 namespace ors {
 namespace utils {
-namespace string_util {
+namespace string {
 bool displayable(char c) { return c >= 32 && c < 127; }
 
 bool printable(const char *str) { return printable(str, strlen(str) + 1); }
@@ -120,6 +119,11 @@ bool ends_with(const std::string &haystack, const std::string &needle) {
                            needle) == 0);
 }
 
-} // namespace string_util
+} // namespace string
+
+namespace stl {
+
+}
+
 } // namespace utils
 } // namespace ors

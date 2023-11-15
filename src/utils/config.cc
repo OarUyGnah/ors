@@ -2,7 +2,7 @@
 #include <fstream>
 #include <functional>
 #include <utils/config.h>
-#include <utils/string_util.h>
+#include <utils/common.h>
 namespace ors {
 namespace utils {
 static constexpr char __white_space[] = " \n\t\v\r\f";
@@ -165,19 +165,19 @@ config::exception::exception(const std::string &error)
     : std::runtime_error(error) {}
 
 config::file_not_found::file_not_found(const string &filename)
-    : exception(string_util::fmt("The config file %s could not be opened",
+    : exception(utils::string::fmt("The config file %s could not be opened",
                                  filename.c_str())),
       filename(filename) {}
 
 config::key_not_found::key_not_found(const string &key)
-    : exception(string_util::fmt("The configuration does not specify %s",
+    : exception(utils::string::fmt("The configuration does not specify %s",
                                  key.c_str())),
       key(key) {}
 
 config::conversion_error::conversion_error(const string &key,
                                            const string &value,
                                            const string &typeName)
-    : exception(string_util::fmt(
+    : exception(utils::string::fmt(
           "The value %s for key %s could not be converted to a %s", key.c_str(),
           value.c_str(), demangle(typeName).c_str())),
       key(key), value(value), typeName(typeName) {}
