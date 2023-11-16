@@ -1,6 +1,9 @@
 #ifndef __ORS_UTILS_STRINGUTIL_H__
 #define __ORS_UTILS_STRINGUTIL_H__
+#pragma once
 #include <algorithm>
+#include <mutex>
+#include <random>
 #include <sstream>
 #include <string>
 #include <vector>
